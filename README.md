@@ -1,198 +1,458 @@
-# SQL-learning-
-SQL practicing on airline data
-tzv-jzoc-izu
+<div align="center">
 
-Disha Sonkar
-9:17 AM
-hi
+# ✈️ AIRLINE & TRAVEL ANALYTICS
+### SQL Learning Journey | PostgreSQL
 
-Disha Sonkar
-9:18 AM
-little upgrade to elarn
-PostgreSQL – WHERE Clause (Level 2: Beginner to Intermediate)
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=38BDF8&center=true&vCenter=true&width=750&lines=Welcome+to+Kirti's+SQL+Learning+Journey;Learn+SQL+with+Real+Travel+Data;Query+%E2%80%A2+Analyse+%E2%80%A2+Learn+%E2%80%A2+Grow;From+SQL+Beginner+to+Data+Analyst" />
 
-Now let's slightly increase the difficulty. These queries will help Kirti understand how real business conditions are applied in airline and travel databases.
+<br>
 
-We will continue using the same six tables.
-1. AND – Multiple Conditions
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-Learning-4479A1?style=for-the-badge&logo=databricks&logoColor=white)
+![Status](https://img.shields.io/badge/LEARNING-IN%20PROGRESS-success?style=for-the-badge)
+![Domain](https://img.shields.io/badge/DOMAIN-AIRLINE%20%26%20TRAVEL-orange?style=for-the-badge)
 
-Scenario: Find Indian customers who are older than 30.
+**A hands-on SQL learning repository based on real-world airline and travel business scenarios.**
 
+</div>
+
+---
+
+# 👋 Welcome to My SQL Learning Journey!
+
+Hello! I'm Kirti.
+
+This repository documents my journey of learning **SQL and PostgreSQL from fundamentals to advanced data analysis**.
+
+Instead of learning SQL only through theoretical examples, I am working with a practical Airline & Travel Management Database.
+
+The database represents business scenarios involving:
+
+- ✈️ Airlines and airport operations
+- 🎫 Flight schedules and bookings
+- 👥 Customer management
+- 💳 Payment transactions
+- 📊 Booking and revenue analysis
+- 🌍 Travel operations and business reporting
+
+My goal is to understand how SQL is used in real companies to retrieve, filter, analyse and interpret business data.
+
+---
+
+# 🎯 What Am I Learning?
+
+<div align="center">
+
+| SQL Fundamentals | Data Analysis | Advanced SQL |
+|:---:|:---:|:---:|
+| SELECT | COUNT() | Subqueries |
+| WHERE | SUM() | CTEs |
+| DISTINCT | AVG() | Window Functions |
+| ORDER BY | GROUP BY | RANK() |
+| LIMIT | HAVING | CASE WHEN |
+| AND / OR | JOINS | PARTITION BY |
+| IN / BETWEEN | Data Analysis | Advanced Reporting |
+
+</div>
+
+---
+
+# 🗺️ My SQL Learning Roadmap
+
+Follow the roadmap step by step.
+
+## 🟢 LEVEL 1 – SQL FUNDAMENTALS
+
+- [ ] Introduction to Databases
+- [ ] Understanding Tables, Rows and Columns
+- [ ] Introduction to PostgreSQL
+- [ ] Understanding Primary Keys and Foreign Keys
+- [ ] SELECT Statement
+- [ ] SELECT *
+- [ ] Selecting Specific Columns
+- [ ] Column Aliases using AS
+- [ ] DISTINCT
+
+## 🟡 LEVEL 2 – FILTERING DATA
+
+- [ ] WHERE Clause
+- [ ] Comparison Operators (=, <>, >, <, >=, <=)
+- [ ] AND Operator
+- [ ] OR Operator
+- [ ] NOT Operator
+- [ ] IN and NOT IN
+- [ ] BETWEEN
+- [ ] LIKE and ILIKE
+- [ ] IS NULL and IS NOT NULL
+- [ ] Combining Multiple Conditions
+
+## 🟠 LEVEL 3 – SORTING AND LIMITING
+
+- [ ] ORDER BY
+- [ ] ASC – Ascending Order
+- [ ] DESC – Descending Order
+- [ ] LIMIT
+- [ ] Sorting Using Multiple Columns
+
+## 🔵 LEVEL 4 – AGGREGATE FUNCTIONS
+
+- [ ] COUNT()
+- [ ] SUM()
+- [ ] AVG()
+- [ ] MIN()
+- [ ] MAX()
+
+## 🟣 LEVEL 5 – DATA GROUPING
+
+- [ ] GROUP BY
+- [ ] HAVING
+- [ ] Airline-wise Analysis
+- [ ] Booking-wise Analysis
+- [ ] Travel Class Analysis
+- [ ] Payment Analysis
+
+## 🔴 LEVEL 6 – SQL JOINS
+
+- [ ] INNER JOIN
+- [ ] LEFT JOIN
+- [ ] RIGHT JOIN
+- [ ] FULL OUTER JOIN
+- [ ] Joining Multiple Tables
+- [ ] Understanding Table Relationships
+
+## 🟤 LEVEL 7 – ADVANCED SQL
+
+- [ ] CASE WHEN
+- [ ] Subqueries
+- [ ] Common Table Expressions (CTEs)
+- [ ] UNION and UNION ALL
+- [ ] Window Functions
+- [ ] ROW_NUMBER()
+- [ ] RANK()
+- [ ] DENSE_RANK()
+- [ ] PARTITION BY
+- [ ] Running Totals
+
+---
+
+# 🗄️ Our Airline & Travel Database
+
+We are working with six relational database tables.
+
+| Table Name | Description |
+|:---|:---|
+| airlines | Stores airline company information |
+| airports | Stores airport details |
+| customers | Stores customer information |
+| flights | Stores flight schedules and status |
+| bookings | Stores customer flight bookings |
+| payments | Stores payment transactions |
+
+## 📊 Database Structure
+
+```mermaid
+erDiagram
+    AIRLINES ||--o{ FLIGHTS : operates
+    AIRPORTS ||--o{ FLIGHTS : source
+    AIRPORTS ||--o{ FLIGHTS : destination
+    CUSTOMERS ||--o{ BOOKINGS : makes
+    FLIGHTS ||--o{ BOOKINGS : receives
+    BOOKINGS ||--o{ PAYMENTS : has
+
+    AIRLINES {
+        int airline_id PK
+        varchar airline_name
+        varchar country
+        varchar airline_code
+    }
+
+    AIRPORTS {
+        int airport_id PK
+        varchar airport_name
+        varchar city
+        varchar country
+        varchar airport_code
+    }
+
+    CUSTOMERS {
+        int customer_id PK
+        varchar first_name
+        varchar last_name
+        varchar email
+        int age
+    }
+
+    FLIGHTS {
+        int flight_id PK
+        int airline_id FK
+        int source_airport_id FK
+        int destination_airport_id FK
+        varchar flight_number
+        varchar flight_status
+    }
+
+    BOOKINGS {
+        int booking_id PK
+        int customer_id FK
+        int flight_id FK
+        date booking_date
+        varchar travel_class
+        numeric ticket_price
+        varchar booking_status
+    }
+
+    PAYMENTS {
+        int payment_id PK
+        int booking_id FK
+        numeric amount
+        varchar payment_method
+        varchar payment_status
+    }
+```
+
+### 🔗 Understanding Relationships
+
+- Airlines connect to Flights using `airline_id`.
+- Airports connect to Flights using `source_airport_id` and `destination_airport_id`.
+- Customers connect to Bookings using `customer_id`.
+- Flights connect to Bookings using `flight_id`.
+- Bookings connect to Payments using `booking_id`.
+
+---
+
+# 💻 CURRENT LEARNING MODULE
+
+<div align="center">
+
+## WHERE CLAUSE – DATA FILTERING
+
+![WHERE](https://img.shields.io/badge/SQL-WHERE%20CLAUSE-blue?style=for-the-badge)
+
+**Learn how to retrieve only the records that match specific business conditions.**
+
+</div>
+
+### 1. SELECT – Retrieve All Records
+
+```sql
+SELECT *
+FROM airlines;
+```
+
+### 2. WHERE – Filter Customers
+
+```sql
+SELECT *
+FROM customers
+WHERE country = 'India';
+```
+
+### 3. AND – Apply Multiple Conditions
+
+```sql
 SELECT *
 FROM customers
 WHERE country = 'India'
 AND age > 30;
+```
 
-Explanation: Both conditions must be satisfied.
-2. OR – Either Condition
+### 4. OR – Match Either Condition
 
-Scenario: Find customers who belong to India or the UK.
-
+```sql
 SELECT *
 FROM customers
 WHERE country = 'India'
 OR country = 'UK';
+```
 
-Explanation: Either condition can be true.
-3. NOT – Exclude a Condition
+### 5. IN – Match Multiple Values
 
-Scenario: Find all bookings except cancelled bookings.
-
-SELECT *
-FROM bookings
-WHERE booking_status <> 'Cancelled';
-
-Explanation: <> means not equal to.
-
-You can also write:
-
-SELECT *
-FROM bookings
-WHERE NOT booking_status = 'Cancelled';
-
-4. IN – Match Multiple Values
-
-Scenario: Find bookings made in Business Class or First Class.
-
+```sql
 SELECT *
 FROM bookings
 WHERE travel_class IN ('Business', 'First Class');
+```
 
-Explanation: IN checks whether a value matches any item in a specified list.
-5. NOT IN – Exclude Multiple Values
+### 6. NOT IN – Exclude Multiple Values
 
-Scenario: Find all bookings except Business and First Class.
-
+```sql
 SELECT *
 FROM bookings
 WHERE travel_class NOT IN ('Business', 'First Class');
+```
 
-Explanation: Excludes the specified travel classes.
-6. BETWEEN – Filter a Range
+### 7. BETWEEN – Filter a Range
 
-Scenario: Find bookings with ticket prices between ₹30,000 and ₹80,000.
-
+```sql
 SELECT *
 FROM bookings
 WHERE ticket_price BETWEEN 30000 AND 80000;
+```
 
-Explanation: Both boundary values are included.
-7. LIKE – Pattern Matching
+### 8. LIKE – Search by Pattern
 
-Scenario: Find customers whose first name starts with A.
-
+```sql
 SELECT *
 FROM customers
 WHERE first_name LIKE 'A%';
+```
 
-Explanation:
+### 9. ILIKE – Case-Insensitive Search
 
-    A means the name must start with A.
-
-    % represents zero or more characters.
-
-Another example: Find email addresses ending in gmail.com.
-
-SELECT *
-FROM customers
-WHERE email LIKE '%gmail.com';
-
-8. ILIKE – Case-Insensitive Search
-
-Scenario: Find customers whose country is India, regardless of letter case.
-
+```sql
 SELECT *
 FROM customers
 WHERE country ILIKE 'india';
+```
 
-Explanation: Unlike LIKE, ILIKE ignores uppercase and lowercase differences in PostgreSQL.
-9. IS NULL – Find Missing Values
+### 10. IS NULL – Find Missing Values
 
-Scenario: Find customers whose gender information is missing.
-
+```sql
 SELECT *
 FROM customers
 WHERE gender IS NULL;
+```
 
-Explanation: IS NULL checks for missing or NULL values.
+---
 
-Important: Do not use = NULL.
-10. Combining AND, OR and Parentheses
+# 🧠 PRACTICE CHALLENGES
 
-Scenario: Find customers who:
+Try solving these business questions independently.
 
-    Belong to India or the UK.
+| No. | Business Question | SQL Concept |
+|---:|---|---|
+| 01 | Find customers from the USA. | WHERE |
+| 02 | Find customers older than 35. | Comparison Operators |
+| 03 | Find all pending or cancelled bookings. | IN |
+| 04 | Find payments made using UPI. | WHERE |
+| 05 | Find bookings priced between ₹40,000 and ₹1,00,000. | BETWEEN |
+| 06 | Find customers whose first name starts with S. | LIKE |
+| 07 | Find flights that are not completed. | NOT |
+| 08 | Find customers from India who are younger than 30. | AND |
+| 09 | Find bookings that are not Economy class. | NOT IN |
+| 10 | Find customers from the UK or USA who are older than 30. | AND / OR |
 
-    Are older than 30.
+---
 
-SELECT *
-FROM customers
-WHERE (country = 'India' OR country = 'UK')
-AND age > 30;
+# 💼 REAL-WORLD BUSINESS ANALYSIS
 
-Explanation:
+As I progress, I will use SQL to answer practical business questions.
 
-    Parentheses evaluate the country conditions together.
+✈️ Which airlines operate the flights in our database?
 
-    AND checks whether the age condition is also satisfied.
+🎫 How many bookings are confirmed, cancelled or pending?
 
-Practice Assignment – Kirti
-Level 2 · Independent Practice
+💰 What is the total booking value?
 
-Ask her to solve these 10 questions without looking at the solutions.
+🌍 Which countries do our customers belong to?
 
-SQL homework
-0/10 hints viewed
+💳 Which payment methods are most frequently used?
 
-1. Find customers from India who are younger than 30.
+📊 Which travel class has the highest booking value?
 
-Hint available
+⏰ How many flights are delayed or cancelled?
 
-2. Find bookings that are either Pending or Cancelled.
+📈 What is the airline-wise booking performance?
 
-Hint available
+**Future project extension:** We will add group booking, passenger volume, seat capacity and airline allocation data to analyse group travel operations more deeply.
 
-3. Find all payments except Failed payments.
+---
 
-Hint available
+# ⚙️ TOOLS & TECHNOLOGIES
 
-4. Find bookings with ticket prices between ₹40,000 and ₹1,00,000.
+<div align="center">
 
-Hint available
+<img src="https://skillicons.dev/icons?i=postgres,git,github,vscode" />
 
-5. Find customers whose first name starts with S.
+</div>
 
-Hint available
+- PostgreSQL – Database management
+- pgAdmin – SQL query execution and database management
+- Git – Version control
+- GitHub – Project documentation and portfolio
 
-6. Find customers whose email ends with yahoo.com.
+---
 
-Hint available
+# 📁 REPOSITORY STRUCTURE
 
-7. Find flights whose status is not Completed.
+```text
+airline-travel-sql-learning/
+│
+├── README.md
+│
+├── 00-database-setup/
+│   └── airline_database_setup.sql
+│
+├── 01-select/
+│   └── select_practice.sql
+│
+├── 02-where/
+│   └── where_practice.sql
+│
+├── 03-order-by-limit/
+│   └── sorting_and_limit.sql
+│
+├── 04-aggregate-functions/
+│   └── aggregate_practice.sql
+│
+├── 05-group-by-having/
+│   └── grouping_practice.sql
+│
+├── 06-joins/
+│   └── joins_practice.sql
+│
+├── 07-case-when/
+│   └── conditional_logic.sql
+│
+├── 08-subqueries-ctes/
+│   └── subqueries_ctes.sql
+│
+├── 09-window-functions/
+│   └── window_functions.sql
+│
+└── 10-business-case-studies/
+    └── airline_analysis.sql
+```
 
-Hint available
+---
 
-8. Find customers from India, USA or Germany.
+# 🚀 MY LEARNING APPROACH
 
-Hint available
+```mermaid
+flowchart TD
+    A["Understand the Concept"] --> B["Learn SQL Syntax"]
+    B --> C["Write the Query"]
+    C --> D["Execute in PostgreSQL"]
+    D --> E["Analyse the Output"]
+    E --> F["Solve Business Questions"]
+    F --> G["Build Practical Projects"]
+```
 
-9. Find bookings that are not Economy class.
+### My Learning Principles
 
-Hint available
+- Understand concepts instead of memorising syntax.
+- Practise every query independently.
+- Use real-world business scenarios.
+- Debug errors and understand why they occur.
+- Maintain organised SQL scripts.
+- Build practical analytical projects.
 
-10. Find customers from the UK or USA who are older than 30.
+---
 
-Hint available
-What to teach next
+<div align="center">
 
-After she completes this lesson, move to:
+# 🌟 EVERY QUERY TAKES ME ONE STEP FORWARD!
 
-    ORDER BY – Sorting records.
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=2500&pause=1000&color=22C55E&center=true&vCenter=true&width=600&lines=Keep+Learning;Keep+Practising;Keep+Building;Happy+Querying!" />
 
-    LIMIT – Restricting output.
+### ✈️ From Airline Operations to Data Analytics
 
-    DISTINCT – Removing duplicate results.
+**My journey from SQL fundamentals to business intelligence starts here.**
 
-    COUNT() – Counting bookings and customers.
+![Visitors](https://komarev.com/ghpvc/?username=YOUR-GITHUB-USERNAME&color=blueviolet&style=flat-square&label=PROFILE+VIEWS)
 
-This progression will take her from basic SQL querying towards actual airline business analysis
+</div>
+
+
+
+
